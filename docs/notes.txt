@@ -1,0 +1,25 @@
+pack form into window
+then later change that frame to a different one
+
+todo: implement tkinter GUI
+todo: add ability to add expenses by week
+todo: add ability to update month expenses
+todo: add ability to change expense categories tracked
+
+
+### INSTRUCTIONS ###
+Expense tracker: the user should be able to enter expenses per category
+(food, clothing, entertainment, rent, etc) and the application should track
+the expenses per week or month.
+
+The user should be able to see their total expenses for a month of their choice
+for each category and a total monthly expense.
+
+The monthly expense report should include average expenses for each category for
+the year and indicate if the user expense for the month selected is lower or higher
+than the annual average.
+
+Also, the report should display the percentage of expenses
+from each category out of the total monthly expenses.
+
+
