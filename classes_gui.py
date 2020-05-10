@@ -208,3 +208,12 @@ class Popup(Tk):
     def close(self):
             self.destroy()
 
+class Row(Frame):
+    def __init__(self, master, records_list, row_padding=0, col_padding=0):
+        Frame.__init__(self, master)
+
+        self.records_list = records_list
+        self.num_records = len(records_list)
+
+        for record in self.records_list:
+            Label(master=self, text=record)
