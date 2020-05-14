@@ -26,7 +26,7 @@ class Window(Frame):
         self.menu.add_command(label='Home', command=lambda:self.home(title, database, year))
         self.menu.add_command(label='Enter', command=lambda:self.enter(title, database, year))
         self.menu.add_command(label='View', command=lambda:self.view(title, database, year))
-        self.menu.add_command(label='Display', command=lambda:self.change_year(title, database, year))
+        self.menu.add_command(label='Change Year', command=lambda:self.change_year(title, database, year))
 
     # desired functions for menu bar
     def home(self, title, database, year):
@@ -210,10 +210,13 @@ class Popup(Tk):
 
 
 
-
 class Table(Frame):
-    def __init__(self, master, num_rows, num_cols, header_titles, rows):
+    def __init__(self, master, header_titles=[], data=[[]]):
         Frame.__init__(self, master)
+        self.num_rows = len(data)
+        self.num_cols = len(data[0])
+        self.header_titles = header_titles
+        self.data = data
 
 
 
@@ -227,10 +230,19 @@ class Row(Frame):
         self.records_list = records_list
         self.num_records = len(records_list)
 
-        for i in range(self.num_records):
-            cell = Cell(master=self, data=self.records_list[i], border_width=1)
-            cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
+        if type(records_list) == 'list':
+            for i in range(self.num_records):
+                cell = Cell(master=self, data=self.records_list[i], border_width=1)
+                cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
+        else:
+            i = 0
+            for record in self.records_list:
+                cell = Cell(master=self, data=record, border_width=1)
+                cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
+                i += 1
 
+
+# todo: implement way to enable border to be on only top, bottom, left, or right 
 class Cell(Frame):
     def __init__(self, master, data, border_color='black', border_width=0):
         Frame.__init__(self, master, highlightbackground=border_color, highlightthickness=border_width)

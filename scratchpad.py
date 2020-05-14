@@ -151,7 +151,15 @@ from classes_gui import Row, Cell
 
 w = Tk()
 w.geometry('300x300')
-records = ['col1', 'col2', 'col3']
+# records = ['col1', 'col2', 'col3']
+# records = {
+#     'thing 1':'apple',
+#     'thing 2':'orange',
+#     'thing 3':'pear'
+# }
+
+records = (1,2,3)
+
 row = Row(w, records).pack()
 #row2 = Row(w, records, row_padding=20, col_padding=2, borderwidth=5).pack()
 row2 = Row(w, records).pack()
