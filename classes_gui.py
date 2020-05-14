@@ -208,12 +208,38 @@ class Popup(Tk):
     def close(self):
             self.destroy()
 
+
+
+
+class Table(Frame):
+    def __init__(self, master, num_rows, num_cols, header_titles, rows):
+        Frame.__init__(self, master)
+
+
+
+
+
+
 class Row(Frame):
-    def __init__(self, master, records_list, row_padding=0, col_padding=0):
+    def __init__(self, master, records_list, row_padding=0, col_padding=0, borderwidth=0):
         Frame.__init__(self, master)
 
         self.records_list = records_list
         self.num_records = len(records_list)
 
-        for record in self.records_list:
-            Label(master=self, text=record)
+        for i in range(self.num_records):
+            cell = Cell(master=self, data=self.records_list[i], border_width=1)
+            cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
+
+class Cell(Frame):
+    def __init__(self, master, data, border_color='black', border_width=0):
+        Frame.__init__(self, master, highlightbackground=border_color, highlightthickness=border_width)
+        self.master = master
+        self.data = str(data)
+        self.border_color = border_color
+        self.border_width = border_width
+        self.label = Label(self, text=self.data)
+        self.placeLabel()
+
+    def placeLabel(self):
+        self.label.pack(expand=YES, pady=2, padx=2)

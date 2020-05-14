@@ -146,4 +146,39 @@
 
 ############################################################################################################################
 
+from tkinter import *
+from classes_gui import Row, Cell
 
+w = Tk()
+w.geometry('300x300')
+records = ['col1', 'col2', 'col3']
+row = Row(w, records).pack()
+#row2 = Row(w, records, row_padding=20, col_padding=2, borderwidth=5).pack()
+row2 = Row(w, records).pack()
+
+w.mainloop()
+
+# w.grid_rowconfigure(0, weight=1)
+# w.grid_columnconfigure(0, weight=1)
+
+# f = Frame(w, highlightbackground='black', highlightthickness=5)
+# f.grid(column=0, row=0)
+# Label(f, text='This is label inside frame').pack(pady=10, padx=10)
+
+# cell = Cell(w, 1234, border_width=5)
+# cell.grid(column = 0, row=1, pady=2, sticky=NSEW)
+
+# w.mainloop()
+
+
+#######################################################################################################
+
+
+# from tkinter import *
+# root = Tk()
+# e = Frame(highlightthickness=1,highlightbackground = "red", highlightcolor= "red").pack()
+# # e.config(highlightbackground = "red", highlightcolor= "red")
+# # e.pack()
+
+# Label(e, text='This is label inside frame').pack()
+# root.mainloop()
