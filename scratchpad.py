@@ -146,37 +146,46 @@
 
 ############################################################################################################################
 
+# from tkinter import *
+# from classes_gui import Row, Cell
+
+# w = Tk()
+# w.geometry('300x300')
+# # records = ['col1', 'col2', 'col3']
+# # records = {
+# #     'thing 1':'apple',
+# #     'thing 2':'orange',
+# #     'thing 3':'pear'
+# # }
+
+# records = (1,2,3)
+
+# row = Row(w, records).pack()
+# #row2 = Row(w, records, row_padding=20, col_padding=2, borderwidth=5).pack()
+# row2 = Row(w, records).pack()
+
+# w.mainloop()
+###################################################################################################
+
 from tkinter import *
-from classes_gui import Row, Cell
+from classes_gui import *
 
 w = Tk()
-w.geometry('300x300')
-# records = ['col1', 'col2', 'col3']
-# records = {
-#     'thing 1':'apple',
-#     'thing 2':'orange',
-#     'thing 3':'pear'
-# }
+w.geometry('500x500')
 
-records = (1,2,3)
+titles = ['one', 'two', 'three']
+data = [
+    [2,4,6],
+    [3,6,8],
+    [4,8,12]
+]
 
-row = Row(w, records).pack()
-#row2 = Row(w, records, row_padding=20, col_padding=2, borderwidth=5).pack()
-row2 = Row(w, records).pack()
+
+t = Table(w, titles, data)
+t.pack()
 
 w.mainloop()
 
-# w.grid_rowconfigure(0, weight=1)
-# w.grid_columnconfigure(0, weight=1)
-
-# f = Frame(w, highlightbackground='black', highlightthickness=5)
-# f.grid(column=0, row=0)
-# Label(f, text='This is label inside frame').pack(pady=10, padx=10)
-
-# cell = Cell(w, 1234, border_width=5)
-# cell.grid(column = 0, row=1, pady=2, sticky=NSEW)
-
-# w.mainloop()
 
 
 #######################################################################################################

@@ -211,12 +211,24 @@ class Popup(Tk):
 
 
 class Table(Frame):
-    def __init__(self, master, header_titles=[], data=[[]]):
+    def __init__(self, master, header_titles=[], data=[[]], row_padding=0, col_padding=0):
         Frame.__init__(self, master)
         self.num_rows = len(data)
         self.num_cols = len(data[0])
         self.header_titles = header_titles
         self.data = data
+        self.row_padding = row_padding
+        self.col_padding = col_padding
+
+        self.draw_table()
+    
+    # todo: figure out how to align columns
+    def draw_table(self):
+        header = Row(self, self.header_titles, row_padding=self.row_padding, col_padding=self.col_padding)
+        header.grid(row=0, column=0)
+        for i in range(self.num_cols):
+            row = Row(self, self.data[i], row_padding=self.row_padding, col_padding=self.col_padding)
+            row.grid(row=(i+1), column=0)
 
 
 
@@ -234,6 +246,7 @@ class Row(Frame):
             for i in range(self.num_records):
                 cell = Cell(master=self, data=self.records_list[i], border_width=1)
                 cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
+        # avoids using the key rather than the value in the case where records_list is a dictionary
         else:
             i = 0
             for record in self.records_list:
