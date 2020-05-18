@@ -19,9 +19,10 @@ def main():
     w.geometry('500x500')
     # Home(w, title='Expense Tracker 2.0', database=database, year=year)
     # Enter(w, title='Expense Tracker 2.0', database=database, year=year)
+
+
     View(w, title='Expense Tracker 2.0', database=database, year=year)
     w.mainloop()
-
 
 if __name__ == "__main__":
     main()

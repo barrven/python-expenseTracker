@@ -167,24 +167,24 @@
 # w.mainloop()
 ###################################################################################################
 
-from tkinter import *
-from classes_gui import *
+# from tkinter import *
+# from classes_gui import *
 
-w = Tk()
-w.geometry('500x500')
+# w = Tk()
+# w.geometry('500x500')
 
-titles = ['two', 'three', 'four']
-data = [
-    [2,3,4],
-    [4,6,8],
-    [6,9,12]
-]
+# titles = ['two', 'three', 'four']
+# data = [
+#     [2,3,4],
+#     [4,6,8],
+#     [6,9,12]
+# ]
 
 
-t = Table(w, titles, data, border_width=2, border_color='red')
-t.pack()
+# t = Table(w, titles, data, border_width=2, border_color='red')
+# t.pack()
 
-w.mainloop()
+# w.mainloop()
 
 
 
@@ -199,3 +199,38 @@ w.mainloop()
 
 # Label(e, text='This is label inside frame').pack()
 # root.mainloop()
+
+
+#######################################################################################################
+
+# table = {
+#     'January': 1,
+#     'February': 2,
+# }
+
+# x = enumerate(table, 1)
+
+# print(list(x))
+
+
+# Python3 code to demonstrate working of 
+# Key index in Dictionary 
+# Using list comprehension + enumerate() 
+
+# initializing dictionary 
+test_dict = {'all' : 1, 'food' : 2, 'good' : 3, 'have' : 4} 
+
+# initializing search key string 
+search_key = 'good'
+
+# printing original dictionary 
+print("The original dictionary is : " + str(test_dict)) 
+
+# Using list comprehension + enumerate() 
+# Key index in Dictionary 
+temp = list(test_dict.items()) 
+res = [idx for idx, key in enumerate(temp) if key[0] == search_key] 
+
+# printing result 
+print("Index of search key is : " + str(res)) 
+

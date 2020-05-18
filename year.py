@@ -107,7 +107,6 @@ class Year:
         return data
 
             
-
     def getEmptyMonths(self):
         month_nums = []
         for month in self.months:
@@ -122,8 +121,70 @@ class Year:
 
         return tuple(empty_months)
 
+    # returns a list of strings or list of integers
+    # based on types in the list passed to it.
+    def switchMonthStringsAndNums(self, stringOrNums):
+        strings = {
+            'January' : 1,
+            'February' : 2,
+            'March' : 3,
+            'April' : 4,
+            'May' : 5,
+            'June': 6,
+            'July' : 7,
+            'August' : 8,
+            'September' : 9,
+            'October' : 10,
+            'November' : 11,
+            'December' : 12 
+        }
+        nums = {
+            '1' : 'January',
+            '2' : 'February',
+            '3' : 'March',
+            '4' : 'April',
+            '5' : 'May',
+            '6' : 'June',
+            '7' : 'July',
+            '8' : 'August',
+            '9' : 'September',
+            '10' : 'October',
+            '11' : 'November',
+            '12' : 'December'
+        }
+        
+        output = []
+        # check if the list has strings or nums
+        # build list of corresponding strings or nums
+        for item in stringOrNums:
+            if type(item) is int:
+                output.append(nums[str(item)])
+            else:
+                output.append(strings[item])
+        
+        return output
 
-# Static Functions ######################
+    # returns an integer
+    def switchMonthStringToInt(self, monthString):
+        strings = {
+            'January' : 1,
+            'February' : 2,
+            'March' : 3,
+            'April' : 4,
+            'May' : 5,
+            'June': 6,
+            'July' : 7,
+            'August' : 8,
+            'September' : 9,
+            'October' : 10,
+            'November' : 11,
+            'December' : 12 
+        }
+
+        return strings[monthString]
+
+
+# Static Functions #
 def customFormat(amt):
     return '{:0,.2f}'.format(float(amt))
 

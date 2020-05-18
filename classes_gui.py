@@ -99,8 +99,9 @@ class Enter(Window):
         
         string_var = StringVar()
         self.months_dropdown = ttk.Combobox(content_frame, textvariable=string_var, state='readonly',  width=widget_width_val)
-        # todo: change this so that months display to user as words rather than numbers
-        self.months_dropdown['values'] = self.year.getEmptyMonths()  # get list of month numbers that have no associated data
+        
+        empty_months_list = self.year.getEmptyMonths()
+        self.months_dropdown['values'] = self.year.switchMonthStringsAndNums(empty_months_list)  # get list of month numbers that have no associated data
         self.months_dropdown.grid(column=1, row=0)
 
         # sets up method to make sure only number are allowed in the input boxes
@@ -139,10 +140,13 @@ class Enter(Window):
             entry_values = []
             for entry in self.entry_category_objects:
                 entry_values.append(entry.get())
-            success_check = self.year.addMonth_flex(self.months_dropdown.get(), entry_values) # try to add month to database via year object
+
+            # switch the month string back to an integer before adding to the DB
+            month_num = self.year.switchMonthStringToInt(self.months_dropdown.get())
+            success_check = self.year.addMonth_flex(month_num, entry_values) # try to add month to database via year object
             if success_check:
                 msg = 'Data for month added'
-                self.months_dropdown['values'] = self.year.getEmptyMonths()
+                self.months_dropdown['values'] = self.year.switchMonthStringsAndNums(self.year.getEmptyMonths())
                 self.clear()
             else:
                 msg = 'Data could not be added'
@@ -204,9 +208,7 @@ class View(Window):
         data_table = Table(content_frame, titles, data)
         data_table.grid(column=0, row=1, columnspan=4, padx=5)
         
-        # self.btn_check = Button(master=content_frame, text='Check Month Val', command=self.check, width=widget_width_val)
-        # self.btn_check.grid(column=1, row=self.num_categories+2, pady=20, padx=col_pad_value)
-
+       
     def submit_sel_month(self):
         print(self.cmb_months.get())
 
