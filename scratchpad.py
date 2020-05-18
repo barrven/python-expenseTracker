@@ -181,7 +181,7 @@ data = [
 ]
 
 
-t = Table(w, titles, data, row_padding=0.5, col_padding=0.5)
+t = Table(w, titles, data, border_width=2, border_color='red')
 t.pack()
 
 w.mainloop()

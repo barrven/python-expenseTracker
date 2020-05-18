@@ -168,22 +168,7 @@ class View(Window):
         
         # for each subclass of Window define contents here
         
-        self.top_frame = Frame(master=self, relief=SUNKEN, bg='red', borderwidth=5)
-        self.top_frame.pack_propagate(0)
-        self.top_frame.pack(pady=10)
-
-        Label(self.top_frame, text='Fuck you, thkinter', width=10, height=10).grid(row=0, column=0)
-        Label(self.top_frame, text='Fuck you, thkinter').grid(row=1, column=1)
-        Label(self.top_frame, text='Fuck you, thkinter').grid(row=2, column=2)
-
-
-        self.middle_frame = Frame(master=self, relief=SUNKEN, bg='red', borderwidth=5)
-        self.middle_frame.pack_propagate(0)
-        self.middle_frame.pack(pady=10)
-
-        Label(self.middle_frame, text='Fuck you, thkinter', width=10, height=10).grid(row=0, column=0)
-        Label(self.middle_frame, text='Fuck you, thkinter').grid(row=1, column=1)
-        Label(self.middle_frame, text='Fuck you, thkinter').grid(row=2, column=2)
+        
 
 
 class ChangeYear(Window):
@@ -211,30 +196,33 @@ class Popup(Tk):
 
 
 class Table(Frame):
-    def __init__(self, master, header_titles=[], data=[[]], row_padding=0, col_padding=0):
+    def __init__(self, master, header_titles=[], data=[[]], border_width=1, border_color='black'):
         Frame.__init__(self, master)
         self.num_rows = len(data)
         self.num_cols = len(data[0])
         self.header_titles = header_titles
         self.data = data
-        self.row_padding = row_padding
-        self.col_padding = col_padding
+        self.border_width = (border_width/2)
+        self.border_color = border_color
 
         self.draw_table()
     
 
     def draw_table(self):
+        borders = Frame(self, bg=self.border_color)
+        borders.pack(expand=YES)
 
         # draw the header
         for i in range(self.num_cols):
-            cell = Cell(self, self.header_titles[i], bg_color='black', fg_color='white')
-            cell.grid(row=0, column=i, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
+            cell = Cell(borders, self.header_titles[i], bg_color='black', fg_color='white')
+            cell.grid(row=0, column=i, pady=self.border_width, padx=self.border_width, sticky=NSEW)
 
         # draw the data records
         for i in range(self.num_rows):
             for j in range(self.num_cols):
-                cell = Cell(self, self.data[i][j])
-                cell.grid(row=(i+1), column=j, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
+                cell = Cell(borders, self.data[i][j])
+                # cell.grid(row=(i+1), column=j, pady=self.border_width, padx=self.border_width, sticky=NSEW)
+                cell.grid(row=(i+1), column=j, pady=0.5, padx=0.5, sticky=NSEW)
 
 
 
@@ -242,7 +230,7 @@ class Table(Frame):
 
 # overhaul cell so that background and foreground colors are changeable
 # and borders are controlled at the table level using padding between cells
-
+# todo: make Cell inherit from label instead of bothering with frame first
 class Cell(Frame):
     def __init__(self, master, data, bg_color='white', fg_color='black'):
         Frame.__init__(self, master, bg=bg_color)
