@@ -183,6 +183,12 @@ class Year:
 
         return strings[monthString]
 
+    def getMonthNamesList(self):
+        monthNames = []
+        for month in self.months:
+            monthNames.append(month.monthName)
+
+        return monthNames
 
 # Static Functions #
 def customFormat(amt):

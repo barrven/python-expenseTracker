@@ -203,34 +203,23 @@
 
 #######################################################################################################
 
-# table = {
-#     'January': 1,
-#     'February': 2,
-# }
+from tkinter import Tk, StringVar, ttk
 
-# x = enumerate(table, 1)
+class Application:
 
-# print(list(x))
+    def __init__(self, parent):
+        self.parent = parent
+        self.combo()
 
+    def combo(self):
+        self.box_value = StringVar()
+        self.box = ttk.Combobox(self.parent, textvariable=self.box_value, 
+                                state='readonly')
+        self.box['values'] = ('Select Letter...', 'A', 'B', 'C')
+        self.box.current(0)
+        self.box.grid(column=0, row=0)
 
-# Python3 code to demonstrate working of 
-# Key index in Dictionary 
-# Using list comprehension + enumerate() 
-
-# initializing dictionary 
-test_dict = {'all' : 1, 'food' : 2, 'good' : 3, 'have' : 4} 
-
-# initializing search key string 
-search_key = 'good'
-
-# printing original dictionary 
-print("The original dictionary is : " + str(test_dict)) 
-
-# Using list comprehension + enumerate() 
-# Key index in Dictionary 
-temp = list(test_dict.items()) 
-res = [idx for idx, key in enumerate(temp) if key[0] == search_key] 
-
-# printing result 
-print("Index of search key is : " + str(res)) 
-
+if __name__ == '__main__':
+    root = Tk()
+    app = Application(root)
+    root.mainloop()

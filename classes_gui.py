@@ -177,40 +177,39 @@ class View(Window):
 
         
         # for each subclass of Window define contents here
-        content_frame = Frame(master=self, pady=20)
-        content_frame.pack()
-        
-        # todo: figure out how to show a message here, e.g. "Select Month" as the initial value
-        string_var = StringVar()
-        self.cmb_months = ttk.Combobox(content_frame, textvariable=string_var, state='readonly',  width=15)
-        
-        
-        # todo: change this vals list to a list supplied by the year object (need month to number method first)
-        vals = ['jan', 'feb', 'mar'] 
-        self.cmb_months['values'] = vals
+        self.content_frame = Frame(master=self, pady=20)
+        self.content_frame.pack()
+
+        vals = self.year.getMonthNamesList()
+        vals.insert(0, 'Select Month') # inserts the user instruction as the first value in the list (prob bad way of doing this)
+        self.cmb_months = DropdownBox(self.content_frame, vals)
         self.cmb_months.grid(column=0, row=0, pady=20, sticky=W)
 
         # enter button....
-        self.btn_enter = Button(content_frame, text='Submit', command=self.submit_sel_month, width=10)
+        self.btn_enter = Button(self.content_frame, text='Submit', command=self.submit_sel_month, width=10)
         self.btn_enter.grid(column=1, row=0, padx=5, sticky=W)
 
         # current year label....
         yrMsg = 'Current Year: ' + str(self.year.yearNum)
-        self.lbl_currYear = Label(content_frame, text=yrMsg)
+        self.lbl_currYear = Label(self.content_frame, text=yrMsg)
         self.lbl_currYear.grid(column=2, row=0, padx=5, sticky=W)
 
         # change year button....
-        self.btn_changeYear = Button(content_frame, text='Change', command=self.change_year, width=8)
+        self.btn_changeYear = Button(self.content_frame, text='Change', command=self.change_year, width=8)
         self.btn_changeYear.grid(column=3, row=0, padx=5, sticky=W, )
-
-        titles = ['', 'Amount', 'Year Avg', '% of Total']
-        data = year.getMonthData(1)
-        data_table = Table(content_frame, titles, data)
-        data_table.grid(column=0, row=1, columnspan=4, padx=5)
         
        
     def submit_sel_month(self):
-        print(self.cmb_months.get())
+        if self.cmb_months.get() == 'Select Month':
+           Popup('No month selected')
+        
+        else:
+            titles = ['', 'Amount', 'Year Avg', '% of Total']
+            monthNum = self.year.switchMonthStringToInt(self.cmb_months.get())
+            data = self.year.getMonthData(monthNum)
+            data_table = Table(self.content_frame, titles, data)
+            data_table.grid(column=0, row=1, columnspan=4, padx=5)
+
 
     
 
@@ -270,9 +269,6 @@ class Table(Frame):
 
 
 
-
-
-
 # todo: make Cell inherit from label instead of bothering with frame first
 # todo: allow for left or right justification in cells
 class Cell(Frame):
@@ -287,3 +283,21 @@ class Cell(Frame):
 
     def place_label(self):
         self.label.pack(expand=YES, pady=2, padx=2)
+
+
+class DropdownBox(Frame):
+    def __init__(self, master, values):
+        Frame.__init__(self, master)
+        self.master = master
+        self.values = values
+        self.combo()
+
+    def combo(self):
+        self.box_value = StringVar()
+        self.box = ttk.Combobox(self, textvariable=self.box_value, state='readonly')
+        self.box['values'] = self.values
+        self.box.current(0)
+        self.box.pack(expand=YES)
+
+    def get(self):
+        return self.box.get()
