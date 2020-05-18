@@ -167,7 +167,12 @@ class View(Window):
         Window.__init__(self, master, title, database, year)
         
         # for each subclass of Window define contents here
-        
+
+        titles = ['', 'Amount', 'Year Avg', '% of Total']
+        data = year.getMonthData(1)
+
+        t = Table(self, titles, data)
+        t.pack()
         
 
 

@@ -86,6 +86,28 @@ class Year:
 
         return s
 
+    def getMonthData(self, monthNum):
+        m = self.getMonthByNumber(monthNum)
+        if m is None:
+            return [[]]
+
+        catNames = ['rent', 'groceries', 'utilities', 'transit', 'shopping', 'entertainment']
+        catTitles = ['Rent: ', 'Groceries: ', 'Utilities: ', 'Transit: ', 'Shopping: ', 'Entertainment: ']
+        data = []
+        for i in range(len(catNames)):
+            current = catNames[i]
+            data_row = [
+                catTitles[i],  # number arg is column width
+                '$' + customFormat(m.getCategory(current)),  # expense amount
+                '$' + customFormat(self.getCatAvg(current)),  # average
+                customFormat(m.getCategoryPercent(current))
+            ]
+            data.append(data_row)
+
+        return data
+
+            
+
     def getEmptyMonths(self):
         month_nums = []
         for month in self.months:
