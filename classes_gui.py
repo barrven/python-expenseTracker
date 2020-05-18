@@ -227,26 +227,30 @@ class Table(Frame):
 
         # draw the header
         for i in range(self.num_cols):
-            cell = Cell(self, self.header_titles[i], border_width=1)
+            cell = Cell(self, self.header_titles[i], bg_color='black', fg_color='white')
             cell.grid(row=0, column=i, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
 
         # draw the data records
         for i in range(self.num_rows):
             for j in range(self.num_cols):
-                cell = Cell(self, self.data[i][j], border_width=1)
+                cell = Cell(self, self.data[i][j])
                 cell.grid(row=(i+1), column=j, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
 
 
 
- 
+
+
+# overhaul cell so that background and foreground colors are changeable
+# and borders are controlled at the table level using padding between cells
+
 class Cell(Frame):
-    def __init__(self, master, data, border_color='black', border_width=0):
-        Frame.__init__(self, master, highlightbackground=border_color, highlightthickness=border_width)
+    def __init__(self, master, data, bg_color='white', fg_color='black'):
+        Frame.__init__(self, master, bg=bg_color)
         self.master = master
         self.data = str(data)
-        self.border_color = border_color
-        self.border_width = border_width
-        self.label = Label(self, text=self.data)
+        self.bg_color = bg_color
+        self.fg_color = fg_color
+        self.label = Label(self, text=self.data, bg=self.bg_color, fg=self.fg_color)
         self.place_label()
 
     def place_label(self):
