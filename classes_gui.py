@@ -222,40 +222,23 @@ class Table(Frame):
 
         self.draw_table()
     
-    # todo: figure out how to align columns
+
     def draw_table(self):
-        header = Row(self, self.header_titles, row_padding=self.row_padding, col_padding=self.col_padding)
-        header.grid(row=0, column=0)
+
+        # draw the header
         for i in range(self.num_cols):
-            row = Row(self, self.data[i], row_padding=self.row_padding, col_padding=self.col_padding)
-            row.grid(row=(i+1), column=0)
+            cell = Cell(self, self.header_titles[i], border_width=1)
+            cell.grid(row=0, column=i, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
+
+        # draw the data records
+        for i in range(self.num_rows):
+            for j in range(self.num_cols):
+                cell = Cell(self, self.data[i][j], border_width=1)
+                cell.grid(row=(i+1), column=j, pady=self.row_padding, padx=self.col_padding, sticky=NSEW)
 
 
 
-
-
-
-class Row(Frame):
-    def __init__(self, master, records_list, row_padding=0, col_padding=0, borderwidth=0):
-        Frame.__init__(self, master)
-
-        self.records_list = records_list
-        self.num_records = len(records_list)
-
-        if type(records_list) == 'list':
-            for i in range(self.num_records):
-                cell = Cell(master=self, data=self.records_list[i], border_width=1)
-                cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
-        # avoids using the key rather than the value in the case where records_list is a dictionary
-        else:
-            i = 0
-            for record in self.records_list:
-                cell = Cell(master=self, data=record, border_width=1)
-                cell.grid(row=0, column=i, pady=row_padding, padx=col_padding)
-                i += 1
-
-
-# todo: implement way to enable border to be on only top, bottom, left, or right 
+ 
 class Cell(Frame):
     def __init__(self, master, data, border_color='black', border_width=0):
         Frame.__init__(self, master, highlightbackground=border_color, highlightthickness=border_width)
@@ -264,7 +247,7 @@ class Cell(Frame):
         self.border_color = border_color
         self.border_width = border_width
         self.label = Label(self, text=self.data)
-        self.placeLabel()
+        self.place_label()
 
-    def placeLabel(self):
+    def place_label(self):
         self.label.pack(expand=YES, pady=2, padx=2)

@@ -173,15 +173,15 @@ from classes_gui import *
 w = Tk()
 w.geometry('500x500')
 
-titles = ['one', 'two', 'three']
+titles = ['two', 'three', 'four']
 data = [
-    [2,4,6],
-    [3,6,8],
-    [4,8,12]
+    [2,3,4],
+    [4,6,8],
+    [6,9,12]
 ]
 
 
-t = Table(w, titles, data)
+t = Table(w, titles, data, row_padding=0.5, col_padding=0.5)
 t.pack()
 
 w.mainloop()
