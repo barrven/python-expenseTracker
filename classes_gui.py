@@ -9,43 +9,43 @@ class Window(Frame):
         Frame.__init__(self, master)
         
         self.master = master
-        self.master.title(title)
+        self.title = title
+        self.database=database
+        self.year=year
+        
+        self.master.title(self.title)
         self.pack(fill = BOTH, expand = True)
 
         self.menu = Menu(self.master)
         self.master.config(menu = self.menu)
 
-        self.database=database
-        self.year=year
         self.now = dt.datetime.now()
 
         # todo: define customized font settings
         font = ('', 20)
 
         # commands to populate the menu bar
-        # todo: fix bug where moving from view to enter generates error: "enter() takes 1 positional argument but 4 were given"
-        # todo: remove lambdas
-        self.menu.add_command(label='Home', command=lambda:self.home(title, database, year))
-        self.menu.add_command(label='Enter', command=lambda:self.enter(title, database, year))
-        self.menu.add_command(label='View', command=lambda:self.view(title, database, year))
-        self.menu.add_command(label='Change Year', command=lambda:self.change_year(title, database, year))
+        self.menu.add_command(label='Home', command=self.home)
+        self.menu.add_command(label='Enter', command=self.enter)
+        self.menu.add_command(label='View', command=self.view)
+        self.menu.add_command(label='Change Year', command=self.change_year)
 
     # desired functions for menu bar
-    def home(self, title, database, year):
+    def home(self):
         self.destroy()
-        Home(self.master, title, database, year)
+        Home(self.master, self.title, self.database, self.year)
 
-    def enter(self, title, database, year):
+    def enter(self):
         self.destroy()
-        Enter(self.master, title, database, year)
+        Enter(self.master, self.title, self.database, self.year)
     
-    def view(self, title, database, year):
+    def view(self):
         self.destroy()
-        View(self.master, title, database, year)
+        View(self.master, self.title, self.database, self.year)
 
-    def change_year(self, title, database, year):
+    def change_year(self):
         self.destroy()
-        ChangeYear(self.master, title, database, year)
+        ChangeYear(self.master, self.title, self.database, self.year)
 
     def validate_number(self, char):
         return char.isdigit()
@@ -170,21 +170,24 @@ class View(Window):
     def __init__(self, master, title, database, year):
         Window.__init__(self, master, title, database, year)
         
+
+        
         # for each subclass of Window define contents here
         content_frame = Frame(master=self, pady=20)
         content_frame.pack()
         
         # todo: figure out how to show a message here, e.g. "Select Month" as the initial value
         string_var = StringVar()
-        self.months_dropdown = ttk.Combobox(content_frame, textvariable=string_var, state='readonly',  width=15)
+        self.cmb_months = ttk.Combobox(content_frame, textvariable=string_var, state='readonly',  width=15)
+        
         
         # todo: change this vals list to a list supplied by the year object (need month to number method first)
         vals = ['jan', 'feb', 'mar'] 
-        self.months_dropdown['values'] = vals
-        self.months_dropdown.grid(column=0, row=0, pady=20, sticky=W)
+        self.cmb_months['values'] = vals
+        self.cmb_months.grid(column=0, row=0, pady=20, sticky=W)
 
         # enter button....
-        self.btn_enter = Button(content_frame, text='Enter', command=self.enter, width=10)
+        self.btn_enter = Button(content_frame, text='Submit', command=self.submit_sel_month, width=10)
         self.btn_enter.grid(column=1, row=0, padx=5, sticky=W)
 
         # current year label....
@@ -201,15 +204,13 @@ class View(Window):
         data_table = Table(content_frame, titles, data)
         data_table.grid(column=0, row=1, columnspan=4, padx=5)
         
-
         # self.btn_check = Button(master=content_frame, text='Check Month Val', command=self.check, width=widget_width_val)
         # self.btn_check.grid(column=1, row=self.num_categories+2, pady=20, padx=col_pad_value)
 
+    def submit_sel_month(self):
+        print(self.cmb_months.get())
 
-    def enter(self):
-        print(self.months_dropdown.get())
-
-
+    
 
 
 class ChangeYear(Window):
