@@ -106,10 +106,10 @@ class Enter(Window):
         self.months_dropdown.grid(column=1, row=0)
 
         # sets up method to make sure only number are allowed in the input boxes
-        # todo: modify so that decimal values are possible to enter. currently only integer values are poossible
+        # todo: modify so that decimal values are possible to enter. currently only integer values are possible
         validation = self.master.register(self.validate_number)
         
-        #setup loop to create labels and entry boxes
+        # setup loop to create labels and entry boxes
         self.entry_category_objects = []
         labels = ['Rent', 'Grocery', 'Utilities', 'Transit', 'Shopping', 'Entertainment']
         self.num_categories = len(labels)
@@ -128,9 +128,6 @@ class Enter(Window):
         self.btn_enter = Button(master=content_frame, text='Submit', command=self.submit, width=widget_width_val)
         self.btn_enter.grid(column=1, row=self.num_categories+1, pady=20, padx=col_pad_value)
 
-        # self.btn_check = Button(master=content_frame, text='Check Month Val', command=self.check, width=widget_width_val)
-        # self.btn_check.grid(column=1, row=self.num_categories+2, pady=20, padx=col_pad_value)
-
     def clear(self):
         self.months_dropdown.set('')
         for cat in self.entry_category_objects:
@@ -144,7 +141,7 @@ class Enter(Window):
 
             # switch the month string back to an integer before adding to the DB
             month_num = self.year.switchMonthStringToInt(self.months_dropdown.get())
-            success_check = self.year.addMonth_flex(month_num, entry_values) # try to add month to database via year object
+            success_check = self.year.addMonth_flex(month_num, entry_values)  # try to add month to database via year object
             if success_check:
                 msg = 'Data for month added'
                 self.months_dropdown['values'] = self.year.switchMonthStringsAndNums(self.year.getEmptyMonths())
@@ -153,9 +150,6 @@ class Enter(Window):
                 msg = 'Data could not be added'
 
             Popup(msg)
-
-    # def check(self):
-    #     print(self.months_dropdown.get())
 
     def is_valid_entry(self):
         if self.months_dropdown.get() == '':
@@ -174,14 +168,13 @@ class Enter(Window):
 class View(Window):
     def __init__(self, master, title, database, year):
         Window.__init__(self, master, title, database, year)
-        self.data_table = None
 
         # for each subclass of Window define contents here
         self.content_frame = Frame(master=self, pady=20)
         self.content_frame.pack()
 
         vals = self.year.getMonthNamesList()
-        vals.insert(0, 'Select Month') # inserts the user instruction as the first value in the list (prob bad way of doing this)
+        vals.insert(0, 'Select Month')  # inserts the user instruction as the first value in the list (prob bad way of doing this)
         self.cmb_months = DropdownBox(self.content_frame, vals)
         self.cmb_months.grid(column=0, row=0, pady=20, sticky=W)
 
@@ -197,14 +190,16 @@ class View(Window):
         # change year button....
         self.btn_changeYear = Button(self.content_frame, text='Change', command=self.change_year, width=8)
         self.btn_changeYear.grid(column=3, row=0, padx=5, sticky=W, )
-        
+
+        # placeholder for data_table
+        self.data_table = None
        
     def submit_sel_month(self):
         if self.cmb_months.get() == 'Select Month':
            Popup('No month selected')
         
         else:
-            if self.data_table != None:
+            if self.data_table is not None:
                 self.data_table.destroy()
             titles = ['', 'Amount', 'Year Avg', '% of Total']
             monthNum = self.year.switchMonthStringToInt(self.cmb_months.get())
@@ -248,7 +243,7 @@ class ChangeYear(Window):
 
         import datetime as dt
         currentYear = dt.datetime.now().year
-        vals = ['Select Year'] # default value of the select year dropdown
+        vals = ['Select Year']  # default value of the select year dropdown
         for i in range(1999, (currentYear+1)):
             vals.append(i)
 
@@ -285,7 +280,7 @@ class Popup(Tk):
         self.mainloop()
 
     def close(self):
-            self.destroy()
+        self.destroy()
 
 
 
@@ -315,7 +310,6 @@ class Table(Frame):
         for i in range(self.num_rows):
             for j in range(self.num_cols):
                 cell = Cell(borders, self.data[i][j])
-                # cell.grid(row=(i+1), column=j, pady=self.border_width, padx=self.border_width, sticky=NSEW)
                 cell.grid(row=(i+1), column=j, pady=0.5, padx=0.5, sticky=NSEW)
 
 
