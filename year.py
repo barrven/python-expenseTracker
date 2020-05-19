@@ -190,6 +190,10 @@ class Year:
 
         return monthNames
 
+    def getTotalMonthExpenses(self, monthNum):
+        total = self.getMonthByNumber(monthNum).getCategory('totalExpenses')
+        return total
+
 # Static Functions #
 def customFormat(amt):
     return '{:0,.2f}'.format(float(amt))

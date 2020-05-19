@@ -211,6 +211,26 @@ class View(Window):
             data_table = Table(self.content_frame, titles, data)
             data_table.grid(column=0, row=1, columnspan=4, padx=5)
 
+            # total expenses label....
+            month_expenses = self.year.getTotalMonthExpenses(monthNum)
+            
+            tot_exp_msg = 'Total Expenses: $' + '{:0,.2f}'.format(float(month_expenses))
+            self.lbl_totalExpenses = Label(self.content_frame, text=tot_exp_msg, pady=20)
+            self.lbl_totalExpenses.grid(column=0, row=2, columnspan=4)
+
+            # year avg compare with month label....
+            year_avg = self.year.getCatAvg('totalExpenses')
+            year_avg_string = '{:0,.2f}'.format(float(year_avg))
+            if month_expenses < year_avg:
+                year_avg_msg = 'This month is below average for the year (${})'.format(year_avg_string)
+            elif month_expenses > year_avg:
+                year_avg_msg = 'This month is above average for the year (${})'.format(year_avg_string)
+            else:
+                year_avg_msg = 'This month is exactly average for the year'
+
+            self.lbl_yearAvg_msg = Label(self.content_frame, text=year_avg_msg, pady=10)
+            self.lbl_yearAvg_msg.grid(column=0, row=3, columnspan=4)
+
 
     
 
