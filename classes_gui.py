@@ -3,6 +3,7 @@ from tkinter import ttk
 import datetime as dt
 import calendar as cal
 from tkinter.font import Font
+import year
 
 class Window(Frame):
     def __init__(self, master, title, database, year):
@@ -219,8 +220,34 @@ class ChangeYear(Window):
         Window.__init__(self, master, title, database, year)
         
         # for each subclass of Window define contents here
-        lbl_hi = Label(self, text='Change the year here, motherfucker')
-        lbl_hi.pack()
+        self.content_frame = Frame(master=self, pady=20)
+        self.content_frame.pack(pady=50)
+
+        self.draw_currYear_label()
+
+        vals = ['Select Year'] # default value of the select year dropdown
+        for i in range(1999, 2100):
+            vals.append(i)
+
+        self.year_dropdown = DropdownBox(self.content_frame, vals)
+        self.year_dropdown.grid(column=0, row=2, pady=10, sticky=NSEW)
+
+        btn_submit = Button(self.content_frame, text='Submit', command=self.exec_change_year, width=15)
+        btn_submit.grid(column=0, row=3, pady=10, sticky=NSEW)
+    
+    def draw_currYear_label(self):
+        msg = 'Current Year is: ' + str(self.year.yearNum)
+        self.lbl_currYear = Label(self.content_frame, text=msg)
+        self.lbl_currYear.grid(column=0, row=1, pady=10, sticky=NSEW)
+
+    def exec_change_year(self):
+        new_year = self.year_dropdown.get()
+        if new_year == 'Select Year':
+            return
+        self.year = year.Year(new_year, self.database)
+        self.lbl_currYear.destroy()
+        self.draw_currYear_label()
+
     
 
 
