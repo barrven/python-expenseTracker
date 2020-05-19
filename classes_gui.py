@@ -174,9 +174,8 @@ class Enter(Window):
 class View(Window):
     def __init__(self, master, title, database, year):
         Window.__init__(self, master, title, database, year)
-        
+        self.data_table = None
 
-        
         # for each subclass of Window define contents here
         self.content_frame = Frame(master=self, pady=20)
         self.content_frame.pack()
@@ -205,11 +204,13 @@ class View(Window):
            Popup('No month selected')
         
         else:
+            if self.data_table != None:
+                self.data_table.destroy()
             titles = ['', 'Amount', 'Year Avg', '% of Total']
             monthNum = self.year.switchMonthStringToInt(self.cmb_months.get())
             data = self.year.getMonthData(monthNum)
-            data_table = Table(self.content_frame, titles, data)
-            data_table.grid(column=0, row=1, columnspan=4, padx=5)
+            self.data_table = Table(self.content_frame, titles, data)
+            self.data_table.grid(column=0, row=1, columnspan=4, padx=5)
 
             # total expenses label....
             month_expenses = self.year.getTotalMonthExpenses(monthNum)
@@ -245,8 +246,10 @@ class ChangeYear(Window):
 
         self.draw_currYear_label()
 
+        import datetime as dt
+        currentYear = dt.datetime.now().year
         vals = ['Select Year'] # default value of the select year dropdown
-        for i in range(1999, 2100):
+        for i in range(1999, (currentYear+1)):
             vals.append(i)
 
         self.year_dropdown = DropdownBox(self.content_frame, vals)
@@ -267,6 +270,7 @@ class ChangeYear(Window):
         self.year = year.Year(new_year, self.database)
         self.lbl_currYear.destroy()
         self.draw_currYear_label()
+        Popup('Year changed successfully to ' + str(new_year))
 
     
 
