@@ -11,14 +11,14 @@ class Window(Frame):
         
         self.master = master
         self.title = title
-        self.database=database
-        self.year=year
+        self.database = database
+        self.year = year
         
         self.master.title(self.title)
-        self.pack(fill = BOTH, expand = True)
+        self.pack(fill=BOTH, expand=True)
 
         self.menu = Menu(self.master)
-        self.master.config(menu = self.menu)
+        self.master.config(menu=self.menu)
 
         self.now = dt.datetime.now()
 
@@ -59,7 +59,7 @@ class Home(Window):
         # for each subclass of Window define contents here
 
         content_frame = Frame(master=self)
-        content_frame.pack(expand = True, fill = BOTH, pady=180)
+        content_frame.pack(expand = True, fill=BOTH, pady=180)
 
 
         lbl_year = Label(content_frame, text='The current year is: ' + str(self.year.yearNum))
